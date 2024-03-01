@@ -14,6 +14,8 @@ interface LambdaStackProps extends StackProps {
 export class LambdaStack extends Stack {
 
     public readonly helloLambdaIntegration: LambdaIntegration
+    public readonly hiLambdaIntegration: LambdaIntegration
+
 
     constructor(scope: Construct, id: string, props?: LambdaStackProps){
         super(scope, id, props)
@@ -26,7 +28,16 @@ export class LambdaStack extends Stack {
                 TABLE_NAME: props.spacesTable.tableName
             }
         })
-
         this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
+
+        const hiLambda = new NodejsFunction(this, 'HiLambda', {
+            runtime: Runtime.NODEJS_20_X,
+            handler: 'handler',
+            entry: join(__dirname, '..', '..', 'services', 'hi.ts'),
+            environment: {
+                TABLE_NAME: props.spacesTable.tableName
+            }
+        })
+        this.hiLambdaIntegration = new LambdaIntegration(hiLambda)
     }
 }

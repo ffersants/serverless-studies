@@ -4,13 +4,18 @@ import { Construct } from 'constructs';
 
 interface ApiStackProps extends StackProps {
     helloLambdaIntegration: LambdaIntegration
+    hiLambdaIntegration: LambdaIntegration
 }
 
 export class ApiStack extends Stack {
     constructor(scope: Construct, id: string, props?: ApiStackProps){
         super(scope, id, props)
         const api = new RestApi(this, 'SpacesApi')
+
         const spacesResource = api.root.addResource('spaces')
         spacesResource.addMethod('GET', props.helloLambdaIntegration)
+
+        const hiResource = api.root.addResource('hi')
+        hiResource.addMethod('GET', props.hiLambdaIntegration)
     }
 }
