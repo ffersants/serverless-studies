@@ -6,6 +6,7 @@ import {
 import { v4 } from "uuid";
 import { postSpaces } from "./postSpaces";
 import { BatchExecuteStatementCommand, DynamoDB } from "@aws-sdk/client-dynamodb";
+import { getSpaces } from "./getSpaces";
 
 const ddbClient = new DynamoDB({});
 
@@ -15,10 +16,7 @@ async function handler(event: APIGatewayProxyEvent, context: Context): Promise<A
             case "POST":
                 return await postSpaces(event, ddbClient);
             case "GET":
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify({teste: "hi"})
-                }  
+                return await getSpaces(event, ddbClient)
             default:          
                 return {
                     statusCode: 103,
