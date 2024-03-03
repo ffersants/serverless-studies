@@ -1,5 +1,9 @@
 POST https://0prs17q6ad.execute-api.sa-east-1.amazonaws.com/prod/spaces
+content-type: application/json
 
+{
+    "location": "Bali"
+}
 ###
 
 GET https://0prs17q6ad.execute-api.sa-east-1.amazonaws.com/prod/spaces
